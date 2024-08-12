@@ -1,6 +1,10 @@
 import dotenv from 'dotenv';
 // 初始化.env变量环境
 dotenv.config();
+import db from './db';
+// 连接数据库
+db();
+
 import { Server } from "http";
 import router from "./router";
 import AccessLoggerMiddleware from "./middleware/access-logger.middleware";

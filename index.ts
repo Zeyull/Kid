@@ -1,6 +1,4 @@
-
-
-import run from './app/index';
+import run from './app';
 import config from './app/config'
 
 run(config.server.port as string);
