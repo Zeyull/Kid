@@ -1,6 +1,12 @@
 import { Context } from 'koa';
 import response from '../utils/response';
-import AccountService from '../service/Account.service';
+import AccountService from '../service/account.service';
+import { createPwdHash, generateSalt } from '../utils/hash';
+import { accessLogger } from '../logger';
+import { sign } from '../utils/auth';
+import { Rules } from 'async-validator';
+import { passwordRules, usernameRules } from '../utils/rules';
+import { validateParam } from '../utils/validate';
 
 
 /**
@@ -8,19 +14,71 @@ import AccountService from '../service/Account.service';
  * @class 
  */
 class AccountController {
+
     /**
-    * Get todo 测试使用，待删除
-    * @param {string} uuid 用户ID
+    * Post 新增用户
+    * @param {string} username 用户名
+    * @param {string} password 密码
     * @return 用户信息
     */
-    async getAccountInfo(ctx: Context) {
-        const data = ctx.request.query;
-        const id = Number(data.id);
-        const user = await AccountService.getAccountById(id);
-        if (user === null) {
-            return response.error(ctx, '该用户不存在', {}, 400);
+    async register(ctx: Context) {
+        const data = ctx.request.body;
+        const rules: Rules = {
+            username: usernameRules,
+            password: passwordRules
         }
-        response.success(ctx, { user }, '获取用户信息', 200);
+        const { error } = await validateParam(data, rules);
+        if (error) {
+            return response.error(ctx, {}, error, 400);
+        }
+
+        const username = data.username;
+        const pwd = data.password;
+        const description = data.description;
+        // 判重
+        const findUser = await AccountService.getAccountByUserName(username);
+        if (findUser) {
+            return response.error(ctx, {}, '该用户名已经存在了', 400);
+        }
+        const salt = generateSalt();
+        const password = createPwdHash(pwd, salt);
+        try {
+            const user = await AccountService.addAccount({
+                username,
+                password,
+                description,
+                salt
+            });
+            response.success(ctx, { id: user.id }, '创建用户成功', 200);
+        } catch (error) {
+            accessLogger.info(`addAccount \n${error}`);
+            response.error(ctx, error, '创建用户失败', 400);
+        }
+    }
+
+    /**
+    * Post 用户登录
+    * @param {string} username 用户名
+    * @param {string} password 密码
+    * @return 用户信息
+    */
+    async login(ctx: Context) {
+        const data = ctx.request.body;
+        const username = String(data.username);
+        const pwd = String(data.password);
+        const findUser = await AccountService.getAccountByUserName(username);
+        if (!findUser) {
+            return response.error(ctx, {}, '用户名或密码错误', 400);
+        }
+        const salt = findUser.salt;
+        const handledPwd = createPwdHash(pwd, salt);
+
+        if (findUser.username === username && findUser.password === handledPwd) {
+            const token = sign(findUser);
+            response.success(ctx, { token, id: findUser.id }, '登录成功', 200);
+        } else {
+            response.error(ctx, {}, '用户名或密码错误', 400);
+        }
     }
 
 }

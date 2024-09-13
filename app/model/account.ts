@@ -14,4 +14,7 @@ export default class Account extends Model {
 
     @Column({ type: DataTypes.STRING(100), allowNull: true })
     description!: string;
+
+    @Column({ type: DataTypes.STRING(64), allowNull: false })
+    salt!: string;
 }

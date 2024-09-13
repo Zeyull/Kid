@@ -6,11 +6,208 @@
     },
     "servers": [
         {
-            "url": "http://localhost:3000/"
+            "url": "http://localhost:3000"
         },
         {
-            "url": "https://localhost:3000/"
+            "url": "https://localhost:3000"
         }
     ],
-    "paths": {}
+    "components": {
+        "schemas": {
+            "Id": {
+                "type": "number",
+                "example": "1"
+            },
+            "CommonResponse": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "type": "number",
+                        "example": "200"
+                    },
+                    "msg": {
+                        "type": "string",
+                        "example": "XXXXXXX"
+                    },
+                    "data": {
+                        "type": "object",
+                        "description": "公用的data字段"
+                    }
+                }
+            },
+            "ErrorResponse": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "type": "number",
+                        "example": "400"
+                    },
+                    "msg": {
+                        "type": "string",
+                        "example": "XXXXXXX"
+                    },
+                    "data": {
+                        "description": "任意值",
+                        "additionalProperties": true
+                    }
+                }
+            },
+            "UserRegister": {
+                "type": "object",
+                "properties": {
+                    "username": {
+                        "type": "string",
+                        "example": "testUser"
+                    },
+                    "password": {
+                        "type": "string",
+                        "example": "password123"
+                    }
+                },
+                "required": [
+                    "username",
+                    "password"
+                ]
+            },
+            "UserLogin": {
+                "type": "object",
+                "properties": {
+                    "username": {
+                        "type": "string",
+                        "example": "testUser"
+                    },
+                    "password": {
+                        "type": "string",
+                        "example": "password123"
+                    }
+                },
+                "required": [
+                    "username",
+                    "password"
+                ]
+            },
+            "RegisterResponse": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/CommonResponse"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "$ref": "#/components/schemas/Id"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            "LoginResponse": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/CommonResponse"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "type": "object",
+                                "properties": {
+                                    "token": {
+                                        "type": "string",
+                                        "example": "jwt-token-example"
+                                    },
+                                    "id": {
+                                        "$ref": "#/components/schemas/Id"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    },
+    "paths": {
+        "/nozomi/register": {
+            "post": {
+                "summary": "用户注册",
+                "operationId": "registerUser",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserRegister"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "注册成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RegisterResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "注册失败",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/nozomi/login": {
+            "post": {
+                "summary": "用户登录",
+                "operationId": "loginUser",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserLogin"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "登录成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoginResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "登录失败",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

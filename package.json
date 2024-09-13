@@ -7,6 +7,7 @@
     "jsdoc": "node_modules/.bin/jsdoc -c doc/conf.json"
   },
   "dependencies": {
+    "async-validator": "^4.2.5",
     "debug": "^4.1.1",
     "dotenv": "^16.4.5",
     "jsonwebtoken": "^9.0.2",

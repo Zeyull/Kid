@@ -21,9 +21,6 @@ const config = {
             db: { appenders: ["db"], level: "info" }
           },
     },
-    hash:{
-        salt: process.env.HASH_SALT,
-    },
     jwt:{
         jwt_secret: process.env.JWT_SECRET,
         jwt_expire: process.env.JWT_EXPIRES,

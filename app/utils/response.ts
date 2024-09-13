@@ -6,7 +6,7 @@ import { Context } from "koa";
  * @param msg 正确提示信息
  * @param code 状态码
  */
-function success(ctx: Context,data: any = [],msg:string = 'success',code: number = 0){
+function success(ctx: Context, data: any = [], msg: string = 'success', code: number = 0) {
     ctx.body = {
         code,
         msg,
@@ -20,7 +20,7 @@ function success(ctx: Context,data: any = [],msg:string = 'success',code: number
  * @param msg 错误提示信息
  * @param code 状态码
  */
-function error(ctx: Context,msg:string = 'error',data: any = [],code: number = 1){
+function error(ctx: Context, data: any = [], msg: string = 'error', code: number = 1) {
     ctx.body = {
         code,
         msg,
@@ -28,7 +28,7 @@ function error(ctx: Context,msg:string = 'error',data: any = [],code: number = 1
     }
 }
 
-export default{
+export default {
     success,
     error
 }
