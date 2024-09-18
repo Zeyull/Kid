@@ -13,7 +13,7 @@ export default class Account extends Model {
     password!: string;
 
     @Column({ type: DataTypes.STRING(100), allowNull: true })
-    description!: string;
+    description?: string;
 
     @Column({ type: DataTypes.STRING(64), allowNull: false })
     salt!: string;
