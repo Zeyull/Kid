@@ -1,6 +1,10 @@
 import Articles from '../model/articles';
 
 class ArticlesService {
+    async getArticlesList(): Promise<Articles[]> {
+        return Articles.findAll();
+    }
+
     async getArticlesById(id: number): Promise<Articles | null> {
         return Articles.findByPk(id);
     }

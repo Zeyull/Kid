@@ -16,7 +16,7 @@
         "schemas": {
             "Id": {
                 "type": "number",
-                "example": "1"
+                "example": 1
             },
             "CommonResponse": {
                 "type": "object",
@@ -32,6 +32,15 @@
                     "data": {
                         "type": "object",
                         "description": "公用的data字段"
+                    }
+                }
+            },
+            "paginationData": {
+                "type": "object",
+                "properties": {
+                    "count": {
+                        "type": "number",
+                        "example": 15
                     }
                 }
             },
@@ -218,6 +227,29 @@
             },
             "updateArticleResponse": {
                 "$ref": "#/components/schemas/addArticleResponse"
+            },
+            "articleListResponse": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/CommonResponse"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "type": "object",
+                                "properties": {
+                                    "pagination": {
+                                        "$ref": "#/components/schemas/paginationData"
+                                    },
+                                    "data": {
+                                        "$ref": "#/components/schemas/articleData"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
             }
         }
     },
@@ -306,7 +338,7 @@
         },
         "/nozomi/article": {
             "get": {
-                "summary": "获取Article",
+                "summary": "获取文章",
                 "tags": [
                     "article"
                 ],
@@ -424,6 +456,37 @@
                     },
                     "400": {
                         "description": "更新文章失败",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/nozomi/articles-list": {
+            "get": {
+                "summary": "获取文章列表",
+                "tags": [
+                    "article"
+                ],
+                "operationId": "getArticleList",
+                "responses": {
+                    "200": {
+                        "description": "获取所有文章",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/articleListResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "获取失败",
                         "content": {
                             "application/json": {
                                 "schema": {

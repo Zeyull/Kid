@@ -13,6 +13,24 @@ import { articleContentRules, articleTitleRules } from '../utils/rules';
  * @class 
  */
 class ArticlesController {
+    /**
+     * 获取所有文章
+     * @returns 所有文章信息
+     */
+    async getArticleList(ctx: Context) {
+        try {
+            const articleList = await articlesService.getArticlesList();
+            response.success(ctx, {
+                pagination: {
+                    count: articleList.length
+                },
+                data: articleList
+
+            }, '', 200);
+        } catch (error) {
+            response.error(ctx, error, '获取文章列表失败', 400);
+        }
+    }
 
     /**
      * 通过Id获取单篇文章
