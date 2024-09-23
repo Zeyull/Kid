@@ -250,6 +250,101 @@
                         }
                     }
                 ]
+            },
+            "announcementData": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "$ref": "#/components/schemas/Id"
+                    },
+                    "content": {
+                        "type": "string"
+                    },
+                    "announcement_time": {
+                        "type": "string"
+                    },
+                    "icon": {
+                        "type": "string"
+                    }
+                }
+            },
+            "addAnnouncementData": {
+                "type": "object",
+                "properties": {
+                    "content": {
+                        "type": "string"
+                    },
+                    "announcement_time": {
+                        "type": "string"
+                    },
+                    "icon": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "content",
+                    "announcement_time",
+                    "icon"
+                ]
+            },
+            "updateAnnouncementData": {
+                "$ref": "#/components/schemas/addAnnouncementData"
+            },
+            "announcementListResponse": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/CommonResponse"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/announcementData"
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            "addAnnouncementResponse": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/CommonResponse"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "$ref": "#/components/schemas/announcementData"
+                            }
+                        }
+                    }
+                ]
+            },
+            "updateAnnouncementResponse": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/CommonResponse"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "$ref": "#/components/schemas/Id"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            "deleteAnnouncementResponse":{
+                "$ref": "#/components/schemas/updateAnnouncementResponse"
             }
         }
     },
@@ -487,6 +582,168 @@
                     },
                     "400": {
                         "description": "获取失败",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/nozomi/announcements-list": {
+            "get": {
+                "summary": "获取公告列表",
+                "tags": [
+                    "announcement"
+                ],
+                "operationId": "getAnnouncementsList",
+                "responses": {
+                    "200": {
+                        "description": "获取所有公告",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/announcementListResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "获取失败",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/nozomi/announcement": {
+            "post": {
+                "summary": "新增公告",
+                "tags": [
+                    "announcement"
+                ],
+                "operationId": "addAnnouncement",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/addAnnouncementData"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "新增公告成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/addAnnouncementResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "新增公告失败",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "summary": "修改公告",
+                "tags": [
+                    "announcement"
+                ],
+                "operationId": "updateAnnouncement",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "The unique identifier of the announcement to update",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/updateAnnouncementData"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "修改公告成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/updateAnnouncementResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "修改公告失败",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "删除公告",
+                "tags": [
+                    "announcement"
+                ],
+                "operationId": "deleteAnnouncement",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "The unique identifier of the announcement to delete",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "删除公告成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/deleteAnnouncementResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "删除公告失败",
                         "content": {
                             "application/json": {
                                 "schema": {

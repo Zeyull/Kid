@@ -1,7 +1,6 @@
 import { Context } from 'koa';
 import response from '../utils/response';
 import { accessLogger } from '../logger';
-import { sign } from '../utils/auth';
 import { Rules } from 'async-validator';
 import { validateParam } from '../utils/validate';
 import articlesService from '../service/articles.service';
