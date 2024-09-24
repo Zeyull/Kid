@@ -593,7 +593,7 @@
                 }
             }
         },
-        "/nozomi/announcements-list": {
+        "/miku/announcements-list": {
             "get": {
                 "summary": "获取公告列表",
                 "tags": [
@@ -624,7 +624,7 @@
                 }
             }
         },
-        "/nozomi/announcement": {
+        "/miku/announcement": {
             "post": {
                 "summary": "新增公告",
                 "tags": [
@@ -744,6 +744,37 @@
                     },
                     "400": {
                         "description": "删除公告失败",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/miku/articles-list": {
+            "get": {
+                "summary": "获取文章列表",
+                "tags": [
+                    "article"
+                ],
+                "operationId": "getArticleList",
+                "responses": {
+                    "200": {
+                        "description": "获取所有文章",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/articleListResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "获取失败",
                         "content": {
                             "application/json": {
                                 "schema": {
