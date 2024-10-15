@@ -3,7 +3,7 @@ import response from '../utils/response';
 import AccountService from '../service/account.service';
 import { createPwdHash, generateSalt } from '../utils/hash';
 import { accessLogger } from '../logger';
-import { sign } from '../utils/auth';
+import { sign, verify } from '../utils/auth';
 import { Rules } from 'async-validator';
 import { passwordRules, usernameRules } from '../utils/rules';
 import { validateParam } from '../utils/validate';
@@ -78,6 +78,29 @@ class AccountController {
             response.success(ctx, { token, id: findUser.id }, '登录成功', 200);
         } else {
             response.error(ctx, {}, '用户名或密码错误', 400);
+        }
+    }
+
+    /**
+    * Post 验证Token是否有效
+    * @param {string} token 令牌
+    * @return 用户信息
+    */
+    async verifyToken(ctx: Context) {
+        const data = ctx.request.body;
+        const token = String(data.token);
+        if (token !== undefined && token !== null) {
+            const { user, error } = verify(token);
+            if (user !== null) {
+                const userData = user.user;
+                response.success(ctx, { username: userData.username, description: userData.description }, 'Token有效', 200);
+            } else if (error !== null) {
+                response.error(ctx, {}, error.message, 4000)
+            } else {
+                response.error(ctx, {}, 'Token失效', 4000)
+            }
+        } else {
+            response.error(ctx, {}, 'Token为空', 4000)
         }
     }
 

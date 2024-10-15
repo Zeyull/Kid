@@ -35,7 +35,7 @@
                     }
                 }
             },
-            "paginationData": {
+            "PaginationData": {
                 "type": "object",
                 "properties": {
                     "count": {
@@ -95,6 +95,17 @@
                     "password"
                 ]
             },
+            "UserToken": {
+                "type": "object",
+                "properties": {
+                    "token": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "token"
+                ]
+            },
             "RegisterResponse": {
                 "allOf": [
                     {
@@ -139,7 +150,33 @@
                     }
                 ]
             },
-            "articleData": {
+            "VerifyTokenResponse": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/CommonResponse"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "$ref": "#/components/schemas/Id"
+                                    },
+                                    "username": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            "ArticleData": {
                 "type": "object",
                 "properties": {
                     "id": {
@@ -169,7 +206,7 @@
                     "updated_at"
                 ]
             },
-            "addArticleData": {
+            "AddArticleData": {
                 "type": "object",
                 "properties": {
                     "title": {
@@ -187,10 +224,25 @@
                     "content"
                 ]
             },
-            "updateArticleData": {
-                "$ref": "#/components/schemas/addArticleData"
+            "UpdateArticleData": {
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "content": {
+                        "type": "string"
+                    },
+                    "picture": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "title",
+                    "content"
+                ]
             },
-            "articleResponse": {
+            "ArticleResponse": {
                 "allOf": [
                     {
                         "$ref": "#/components/schemas/CommonResponse"
@@ -199,13 +251,13 @@
                         "type": "object",
                         "properties": {
                             "data": {
-                                "$ref": "#/components/schemas/articleData"
+                                "$ref": "#/components/schemas/ArticleData"
                             }
                         }
                     }
                 ]
             },
-            "addArticleResponse": {
+            "AddArticleResponse": {
                 "allOf": [
                     {
                         "$ref": "#/components/schemas/CommonResponse"
@@ -225,10 +277,27 @@
                     }
                 ]
             },
-            "updateArticleResponse": {
-                "$ref": "#/components/schemas/addArticleResponse"
+            "UpdateArticleResponse": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/CommonResponse"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "$ref": "#/components/schemas/Id"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
             },
-            "articleListResponse": {
+            "ArticleListResponse": {
                 "allOf": [
                     {
                         "$ref": "#/components/schemas/CommonResponse"
@@ -240,10 +309,13 @@
                                 "type": "object",
                                 "properties": {
                                     "pagination": {
-                                        "$ref": "#/components/schemas/paginationData"
+                                        "$ref": "#/components/schemas/PaginationData"
                                     },
                                     "data": {
-                                        "$ref": "#/components/schemas/articleData"
+                                        "type": "array",
+                                        "items": {
+                                            "$ref": "#/components/schemas/ArticleData"
+                                        }
                                     }
                                 }
                             }
@@ -251,7 +323,7 @@
                     }
                 ]
             },
-            "announcementData": {
+            "AnnouncementData": {
                 "type": "object",
                 "properties": {
                     "id": {
@@ -268,7 +340,7 @@
                     }
                 }
             },
-            "addAnnouncementData": {
+            "AddAnnouncementData": {
                 "type": "object",
                 "properties": {
                     "content": {
@@ -287,10 +359,26 @@
                     "icon"
                 ]
             },
-            "updateAnnouncementData": {
-                "$ref": "#/components/schemas/addAnnouncementData"
+            "UpdateAnnouncementData": {
+                "type": "object",
+                "properties": {
+                    "content": {
+                        "type": "string"
+                    },
+                    "announcement_time": {
+                        "type": "string"
+                    },
+                    "icon": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "content",
+                    "announcement_time",
+                    "icon"
+                ]
             },
-            "announcementListResponse": {
+            "AnnouncementListResponse": {
                 "allOf": [
                     {
                         "$ref": "#/components/schemas/CommonResponse"
@@ -301,14 +389,14 @@
                             "data": {
                                 "type": "array",
                                 "items": {
-                                    "$ref": "#/components/schemas/announcementData"
+                                    "$ref": "#/components/schemas/AnnouncementData"
                                 }
                             }
                         }
                     }
                 ]
             },
-            "addAnnouncementResponse": {
+            "AddAnnouncementResponse": {
                 "allOf": [
                     {
                         "$ref": "#/components/schemas/CommonResponse"
@@ -317,13 +405,13 @@
                         "type": "object",
                         "properties": {
                             "data": {
-                                "$ref": "#/components/schemas/announcementData"
+                                "$ref": "#/components/schemas/AnnouncementData"
                             }
                         }
                     }
                 ]
             },
-            "updateAnnouncementResponse": {
+            "UpdateAnnouncementResponse": {
                 "allOf": [
                     {
                         "$ref": "#/components/schemas/CommonResponse"
@@ -343,8 +431,25 @@
                     }
                 ]
             },
-            "deleteAnnouncementResponse":{
-                "$ref": "#/components/schemas/updateAnnouncementResponse"
+            "DeleteAnnouncementResponse": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/CommonResponse"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "$ref": "#/components/schemas/Id"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
             }
         }
     },
@@ -431,6 +536,47 @@
                 }
             }
         },
+        "/nozomi/verify-token": {
+            "post": {
+                "summary": "验证Token有效性",
+                "tags": [
+                    "user"
+                ],
+                "operationId": "verifyToken",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserToken"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Token有效",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/VerifyTokenResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Token无效",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/nozomi/article": {
             "get": {
                 "summary": "获取文章",
@@ -455,7 +601,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/articleResponse"
+                                    "$ref": "#/components/schemas/ArticleResponse"
                                 }
                             }
                         }
@@ -483,7 +629,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/addArticleData"
+                                "$ref": "#/components/schemas/AddArticleData"
                             }
                         }
                     }
@@ -494,7 +640,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/addArticleResponse"
+                                    "$ref": "#/components/schemas/AddArticleResponse"
                                 }
                             }
                         }
@@ -533,7 +679,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/updateArticleData"
+                                "$ref": "#/components/schemas/UpdateArticleData"
                             }
                         }
                     }
@@ -544,7 +690,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/updateArticleResponse"
+                                    "$ref": "#/components/schemas/UpdateArticleResponse"
                                 }
                             }
                         }
@@ -575,7 +721,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/articleListResponse"
+                                    "$ref": "#/components/schemas/ArticleListResponse"
                                 }
                             }
                         }
@@ -606,7 +752,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/announcementListResponse"
+                                    "$ref": "#/components/schemas/AnnouncementListResponse"
                                 }
                             }
                         }
@@ -636,7 +782,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/addAnnouncementData"
+                                "$ref": "#/components/schemas/AddAnnouncementData"
                             }
                         }
                     }
@@ -647,7 +793,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/addAnnouncementResponse"
+                                    "$ref": "#/components/schemas/AddAnnouncementResponse"
                                 }
                             }
                         }
@@ -686,7 +832,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/updateAnnouncementData"
+                                "$ref": "#/components/schemas/UpdateAnnouncementData"
                             }
                         }
                     }
@@ -697,7 +843,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/updateAnnouncementResponse"
+                                    "$ref": "#/components/schemas/UpdateAnnouncementResponse"
                                 }
                             }
                         }
@@ -737,7 +883,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/deleteAnnouncementResponse"
+                                    "$ref": "#/components/schemas/DeleteAnnouncementResponse"
                                 }
                             }
                         }
@@ -768,7 +914,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/articleListResponse"
+                                    "$ref": "#/components/schemas/ArticleListResponse"
                                 }
                             }
                         }
