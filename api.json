@@ -144,9 +144,11 @@
                                     "id": {
                                         "$ref": "#/components/schemas/Id"
                                     }
-                                }
+                                },
+                                "required": ["token", "id"]
                             }
-                        }
+                        },
+                        "required": ["data"]
                     }
                 ]
             },
