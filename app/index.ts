@@ -9,7 +9,7 @@ import { Server } from "http";
 import router from "./router";
 import AccessLoggerMiddleware from "./middleware/access-logger.middleware";
 import koaStatic from 'koa-static';
-import Koa from 'Koa';
+import Koa from 'koa';
 import koaBody from 'koa-body';
 import path from 'path';
 
