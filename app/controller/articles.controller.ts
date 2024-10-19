@@ -126,5 +126,32 @@ class ArticlesController {
     }
 
 
+    /**
+     * 删除文章
+     * @param {string} id 文章id
+     * @returns 文章
+     */
+    async deleteArticle(ctx: Context) {
+        const param = ctx.request.query;
+        const id = Number(param.id);
+        if (!Number.isFinite(id)) {
+            return response.error(ctx, {}, 'id必须为数字', 200);
+        }
+
+        try {
+            const findArticle = await articlesService.getArticlesById(id)
+            if (!findArticle) {
+                return response.error(ctx, {}, '该文章ID不存在', 400);
+            }
+
+            findArticle.destroy();
+            response.success(ctx, { id: findArticle.id }, '删除文章成功', 200);
+        } catch (error) {
+            accessLogger.info(`deleteArticle \n${error}`);
+            response.error(ctx, error, '删除文章失败', 400);
+        }
+    }
+
 }
+
 export default new ArticlesController;

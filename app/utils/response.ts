@@ -21,6 +21,7 @@ function success(ctx: Context, data: any = [], msg: string = 'success', code: nu
  * @param code 状态码
  */
 function error(ctx: Context, data: any = [], msg: string = 'error', code: number = 1) {
+    ctx.status = code;
     ctx.body = {
         code,
         msg,
