@@ -30,6 +30,7 @@ class AnnouncementsController {
     * @param {string} content 公告内容
     * @param {string} icon 图标
     * @param {string} announcement_time 公告时间
+    * @param {string} color Icon颜色
     * @returns 公告
     */
     async addAnnouncement(ctx: Context) {
@@ -38,11 +39,13 @@ class AnnouncementsController {
         const content = data.content;
         const icon = data.icon;
         const announcement_time = data.announcement_time;
+        const color = data.color;
         try {
             const announcement = await announcementsService.addAnnouncement({
                 content,
                 icon,
-                announcement_time
+                announcement_time,
+                color
             });
             response.success(ctx, announcement, '创建公告成功', 200);
         } catch (error) {
@@ -57,6 +60,7 @@ class AnnouncementsController {
     * @param {string} content 公告内容
     * @param {string} icon 图标
     * @param {string} announcement_time 公告时间
+    * @param {string} color Icon颜色
     * @returns 公告ID
     */
     async updateAnnouncement(ctx: Context) {
@@ -76,6 +80,7 @@ class AnnouncementsController {
             findAnnouncement.content = data.content || findAnnouncement.content;
             findAnnouncement.icon = data.icon || findAnnouncement.icon;
             findAnnouncement.announcement_time = data.announcement_time || findAnnouncement.announcement_time;
+            findAnnouncement.color = data.color || findAnnouncement.color;
 
             findAnnouncement.save();
             response.success(ctx, { id: findAnnouncement.id }, '修改公告成功', 200);

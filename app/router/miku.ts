@@ -1,7 +1,7 @@
 
 import ArticlesController from '../controller/articles.controller';
 import koaRouter from 'koa-router';
-import announcementsRouter from './announcement';
+import announcementsRouter from './announcement.miku';
 
 const mikuRouter = new koaRouter({ prefix: "/miku" });
 mikuRouter.get('/articles-list', ArticlesController.getArticleList);

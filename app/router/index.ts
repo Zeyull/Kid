@@ -4,6 +4,7 @@ import accountRouter from './account';
 import articleRouter from './articles';
 import AuthMiddleware from '../middleware/auth.middleware';
 import mikuRouter from './miku';
+import announcementsRouter from './announcement.nozomi';
 
 const router = new koaRouter();
 router.use(commonRouter.routes());
@@ -14,5 +15,6 @@ router.use(mikuRouter.routes());
 router.use(AuthMiddleware);
 
 router.use(articleRouter.routes());
+router.use(announcementsRouter.routes());
 
 export default router;

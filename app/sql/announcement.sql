@@ -3,5 +3,6 @@ CREATE TABLE `announcements` (
   `content` text NOT NULL,
   `announcement_time` datetime NOT NULL,
   `icon` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `color` varchar(255) DEFAULT '#000',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3

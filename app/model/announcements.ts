@@ -14,4 +14,7 @@ export default class Announcements extends Model {
 
     @Column({ type: DataTypes.STRING(255), allowNull: false })
     icon!: string;
+
+    @Column({ type: DataTypes.STRING(255), allowNull: false })
+    color!: string;
 }

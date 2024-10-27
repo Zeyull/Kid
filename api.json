@@ -165,10 +165,15 @@
                                         "$ref": "#/components/schemas/Id"
                                     }
                                 },
-                                "required": ["token", "id"]
+                                "required": [
+                                    "token",
+                                    "id"
+                                ]
                             }
                         },
-                        "required": ["data"]
+                        "required": [
+                            "data"
+                        ]
                     }
                 ]
             },
@@ -359,8 +364,18 @@
                     },
                     "icon": {
                         "type": "string"
+                    },
+                    "color": {
+                        "type": "string"
                     }
-                }
+                },
+                "required": [
+                    "id",
+                    "content",
+                    "announcement_time",
+                    "icon",
+                    "color"
+                ]
             },
             "AddAnnouncementData": {
                 "type": "object",
@@ -832,7 +847,38 @@
                 }
             }
         },
-        "/miku/announcement": {
+        "/nozomi/announcements-list": {
+            "get": {
+                "summary": "获取公告列表",
+                "tags": [
+                    "announcement"
+                ],
+                "operationId": "getAnnouncementsList",
+                "responses": {
+                    "200": {
+                        "description": "获取所有公告",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AnnouncementListResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "获取失败",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/nozomi/announcement": {
             "post": {
                 "summary": "新增公告",
                 "tags": [
