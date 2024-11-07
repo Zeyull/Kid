@@ -487,6 +487,34 @@
                         }
                     }
                 ]
+            },
+            "OSSUploadPicName": {
+                "type": "object",
+                "properties": {
+                    "image": {
+                        "type": "string"
+                    }
+                }
+            },
+            "AddOSSPicResponse": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/CommonResponse"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "type": "object",
+                                "properties": {
+                                    "url": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
             }
         }
     },
@@ -998,6 +1026,47 @@
                     },
                     "400": {
                         "description": "删除公告失败",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/nozomi/oss/upload-pic": {
+            "post": {
+                "summary": "上传图片",
+                "tags": [
+                    "oss"
+                ],
+                "operationId": "ossUploadPic",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/OSSUploadPicName"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "上传图片成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AddOSSPicResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "上传图片失败",
                         "content": {
                             "application/json": {
                                 "schema": {

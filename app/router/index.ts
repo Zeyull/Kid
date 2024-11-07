@@ -5,6 +5,7 @@ import articleRouter from './articles';
 import AuthMiddleware from '../middleware/auth.middleware';
 import mikuRouter from './miku';
 import announcementsRouter from './announcement.nozomi';
+import aliyunOSSRouter from './aliyun-oss';
 
 const router = new koaRouter();
 router.use(commonRouter.routes());
@@ -16,5 +17,6 @@ router.use(AuthMiddleware);
 
 router.use(articleRouter.routes());
 router.use(announcementsRouter.routes());
+router.use(aliyunOSSRouter.routes());
 
 export default router;

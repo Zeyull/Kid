@@ -19,7 +19,7 @@ app
     .use(koaBody({
         multipart: true,
         formidable: {
-            maxFieldsSize: 500 * 1024 * 1024, // 设置文件大小最多5MB
+            maxFieldsSize: 1500 * 1024 * 1024, // 设置文件大小最多15MB
             hashAlgorithm: 'md5'
         }
     }))

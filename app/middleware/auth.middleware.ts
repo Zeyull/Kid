@@ -16,6 +16,7 @@ function AuthMiddleware(ctx:Context,next:Next){
             return next();
         }
     }
+    ctx.status = 403;
     ctx.body={
         msg:'authorization error',
         code:4000
