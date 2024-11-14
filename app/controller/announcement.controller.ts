@@ -26,6 +26,26 @@ class AnnouncementsController {
     }
 
     /**
+     * 获取单个公告
+     * @param {number} id 公告ID
+     * @returns 单个公告内容
+     */
+      async getAnnouncement(ctx: Context) {
+        const data = ctx.request.query;
+        const id = Number(data.id);
+        if (!Number.isFinite(id)) {
+            return response.error(ctx, {}, 'id必须为数字', 200);
+        }
+        
+        const announcement = await announcementsService.getAnnouncementById(id);
+        if(announcement) {
+            response.success(ctx, announcement, '获取公告成功', 200);
+        }else{
+            response.error(ctx, {}, '该公告ID不存在', 400);
+        }
+    }
+
+    /**
     * 新增公告
     * @param {string} content 公告内容
     * @param {string} icon 图标

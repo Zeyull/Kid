@@ -388,12 +388,16 @@
                     },
                     "icon": {
                         "type": "string"
+                    },
+                    "color": {
+                        "type": "string"
                     }
                 },
                 "required": [
                     "content",
                     "announcement_time",
-                    "icon"
+                    "icon",
+                    "color"
                 ]
             },
             "UpdateAnnouncementData": {
@@ -407,12 +411,16 @@
                     },
                     "icon": {
                         "type": "string"
+                    },
+                    "color": {
+                        "type": "string"
                     }
                 },
                 "required": [
                     "content",
                     "announcement_time",
-                    "icon"
+                    "icon",
+                    "color"
                 ]
             },
             "AnnouncementListResponse": {
@@ -428,6 +436,21 @@
                                 "items": {
                                     "$ref": "#/components/schemas/AnnouncementData"
                                 }
+                            }
+                        }
+                    }
+                ]
+            },
+            "GetAnnouncementResponse": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/CommonResponse"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "$ref": "#/components/schemas/AnnouncementData"
                             }
                         }
                     }
@@ -907,6 +930,46 @@
             }
         },
         "/nozomi/announcement": {
+            "get": {
+                "summary": "获取公告",
+                "tags": [
+                    "announcement"
+                ],
+                "operationId": "getAnnouncement",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "required": true,
+                        "description": "The unique identifier of the account",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "获取公告成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetAnnouncementResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "获取公告失败",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
             "post": {
                 "summary": "新增公告",
                 "tags": [
