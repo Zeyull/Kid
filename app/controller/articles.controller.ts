@@ -4,7 +4,7 @@ import { accessLogger } from '../logger';
 import { Rules } from 'async-validator';
 import { validateParam } from '../utils/validate';
 import articlesService from '../service/articles.service';
-import { articleContentRules, articleTitleRules } from '../utils/rules';
+import { articleContentRules, articleTitleRules, isVisibleRules } from '../utils/rules';
 
 
 /**
@@ -55,6 +55,7 @@ class ArticlesController {
      * @param {string} title 文章标题
      * @param {string} content 文章内容
      * @param {string} picture 文章封面
+     * @param {number} is_visible 文章是否可见
      * @returns 文章信息
      */
     async addArticle(ctx: Context) {
@@ -70,11 +71,13 @@ class ArticlesController {
         const title = data.title;
         const content = data.content;
         const picture = data.picture;
+        const is_visible = data.is_visible;
         try {
             const article = await articlesService.addArticles({
                 title,
                 content,
-                picture
+                picture,
+                is_visible
             });
             response.success(ctx, { id: article.id }, '创建文章成功', 200);
         } catch (error) {
@@ -85,10 +88,11 @@ class ArticlesController {
 
     /**
      * 修改文章
-     * @param {string} id 文章id
+     * @param {number} id 文章id
      * @param {string} title 文章标题
      * @param {string} content 文章内容
      * @param {string} picture 文章封面
+     * @param {number} is_visible 文章是否可见
      * @returns 文章信息
      */
     async updateArticle(ctx: Context) {
@@ -101,6 +105,7 @@ class ArticlesController {
         const rules: Rules = {
             title: articleTitleRules,
             content: articleContentRules,
+            is_visible: isVisibleRules,
         };
         const { error } = await validateParam(data, rules);
         if (error) {
@@ -116,6 +121,7 @@ class ArticlesController {
             findArticle.title = data.title || findArticle.title;
             findArticle.content = data.content || findArticle.content;
             findArticle.picture = data.picture || findArticle.picture;
+            findArticle.is_visible = data.is_visible || findArticle.is_visible;
 
             findArticle.save();
             response.success(ctx, { id: findArticle.id }, '修改文章成功', 200);

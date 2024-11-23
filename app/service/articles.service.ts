@@ -9,7 +9,7 @@ class ArticlesService {
         return Articles.findByPk(id);
     }
 
-    async addArticles(article: { title: string, content: string, picture?: string }): Promise<Articles> {
+    async addArticles(article: { title: string, content: string, picture?: string, is_visible: number }): Promise<Articles> {
         return Articles.create<Articles>(article);
     }
 }

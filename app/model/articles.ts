@@ -20,4 +20,7 @@ export default class Articles extends Model {
 
     @Column({ type: DataTypes.STRING(64), allowNull: true })
     picture?: string;
+
+    @Column({ type: DataTypes.TINYINT, allowNull: false})
+    is_visible!: string;
 }

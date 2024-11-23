@@ -223,6 +223,10 @@
                     },
                     "picture": {
                         "type": "string"
+                    },
+                    "is_visible": {
+                        "type": "number",
+                        "description": "值为0，1。1为显示，0为隐藏"
                     }
                 },
                 "required": [
@@ -230,7 +234,8 @@
                     "title",
                     "content",
                     "created_at",
-                    "updated_at"
+                    "updated_at",
+                    "is_visible"
                 ]
             },
             "AddArticleData": {
@@ -244,11 +249,15 @@
                     },
                     "picture": {
                         "type": "string"
+                    },
+                    "is_visible": {
+                        "tpye": "number"
                     }
                 },
                 "required": [
                     "title",
-                    "content"
+                    "content",
+                    "is_visible"
                 ]
             },
             "UpdateArticleData": {
@@ -262,11 +271,15 @@
                     },
                     "picture": {
                         "type": "string"
+                    },
+                    "is_visible": {
+                        "tpye": "number"
                     }
                 },
                 "required": [
                     "title",
-                    "content"
+                    "content",
+                    "is_visible"
                 ]
             },
             "ArticleResponse": {

@@ -122,6 +122,11 @@ export const articleContentRules:RuleItem[] = [
   { type:'string',message: 'content数据格式不对'},
 ]
 
+export const isVisibleRules:RuleItem[] = [
+  {required:true, message: 'is_visible值不能为空'},
+  { type:'number', enum: [0, 1], message: 'content数据格式不对'},
+]
+
 export const authorIDRules:RuleItem[] = [
   {required:true, message: '发布者不能为空'},
 ]
