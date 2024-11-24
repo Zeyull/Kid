@@ -251,7 +251,7 @@
                         "type": "string"
                     },
                     "is_visible": {
-                        "tpye": "number"
+                        "type": "number"
                     }
                 },
                 "required": [

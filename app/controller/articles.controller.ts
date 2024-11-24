@@ -118,10 +118,10 @@ class ArticlesController {
         }
 
         try {
-            findArticle.title = data.title || findArticle.title;
-            findArticle.content = data.content || findArticle.content;
-            findArticle.picture = data.picture || findArticle.picture;
-            findArticle.is_visible = data.is_visible || findArticle.is_visible;
+            findArticle.title = data.title;
+            findArticle.content = data.content;
+            findArticle.picture = data.picture;
+            findArticle.is_visible = data.is_visible;
 
             findArticle.save();
             response.success(ctx, { id: findArticle.id }, '修改文章成功', 200);
