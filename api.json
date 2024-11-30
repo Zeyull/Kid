@@ -194,6 +194,9 @@
                                     "username": {
                                         "type": "string"
                                     },
+                                    "avatar": {
+                                        "type": "string"
+                                    },
                                     "description": {
                                         "type": "string"
                                     }

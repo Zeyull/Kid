@@ -17,4 +17,7 @@ export default class Account extends Model {
 
     @Column({ type: DataTypes.STRING(64), allowNull: false })
     salt!: string;
+
+    @Column({ type: DataTypes.STRING(255), allowNull: false })
+    avatar!: string;
 }

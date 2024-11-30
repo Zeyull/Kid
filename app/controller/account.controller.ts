@@ -14,7 +14,6 @@ import { validateParam } from '../utils/validate';
  * @class 
  */
 class AccountController {
-
     /**
     * Post 新增用户
     * @param {string} username 用户名
@@ -93,7 +92,7 @@ class AccountController {
             const { user, error } = verify(token);
             if (user !== null) {
                 const userData = user.user;
-                response.success(ctx, { username: userData.username, description: userData.description }, 'Token有效', 200);
+                response.success(ctx, { username: userData.username, avatar: userData.avatar, description: userData.description }, 'Token有效', 200);
             } else if (error !== null) {
                 response.error(ctx, {}, error.message, 4000)
             } else {
